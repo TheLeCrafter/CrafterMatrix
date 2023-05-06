@@ -26,4 +26,8 @@ class CrafterMatrix<Type> {
         this.data[location.x] = yMap
     }
 
+    fun has(location: CrafterVector) : Boolean {
+        return get(location) != null
+    }
+
 }

@@ -16,6 +16,7 @@ class CrafterMatrixTest {
         assert(matrix.get(location2) == false)
         assert(matrix.get(location3) == null)
         matrix.remove(location1)
-        assert(matrix.get(location1) == null)
+        assert(!matrix.has(location1))
+        assert(matrix.has(location2))
     }
 }

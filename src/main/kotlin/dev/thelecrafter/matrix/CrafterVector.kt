@@ -4,7 +4,13 @@ import kotlin.math.abs
 import kotlin.math.acos
 import kotlin.math.sqrt
 
-class CrafterVector(val x: Double, val y: Double, val z: Double) {
+data class CrafterVector(val x: Double, val y: Double, val z: Double) {
+
+    companion object {
+        fun of(value: Double): CrafterVector {
+            return CrafterVector(value, value, value)
+        }
+    }
 
     operator fun plus(vector: CrafterVector) = CrafterVector(x + vector.x, y + vector.y, z + vector.z)
 
