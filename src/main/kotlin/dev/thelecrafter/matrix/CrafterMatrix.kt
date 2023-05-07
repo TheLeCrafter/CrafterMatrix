@@ -4,7 +4,16 @@ package dev.thelecrafter.matrix
  * 3d Matrix
  */
 class CrafterMatrix<Type> {
-    private val data: MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>> = mutableMapOf()
+
+    companion object {
+        fun <Type> of(data: MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>>) : CrafterMatrix<Type> {
+            val matrix = CrafterMatrix<Type>()
+            matrix.setFullData(data)
+            return matrix
+        }
+    }
+
+    private var data: MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>> = mutableMapOf()
 
     fun set(location: CrafterVector, data: Type) {
         val yMap = this.data[location.x] ?: mutableMapOf()
@@ -28,6 +37,46 @@ class CrafterMatrix<Type> {
 
     fun has(location: CrafterVector) : Boolean {
         return get(location) != null
+    }
+
+    fun clone(): CrafterMatrix<Type> {
+        return of(data)
+    }
+
+    /**
+     * Merges cloned data with given one (overwriting cloned data if needed)
+     */
+    fun with(data: MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>>): CrafterMatrix<Type> {
+        val matrix = clone()
+        data.forEach { (xKey, xValue) ->
+            xValue.forEach { (yKey, yValue) ->
+                yValue.forEach { (zKey, zValue) ->
+                    matrix.set(CrafterVector(xKey, yKey, zKey), zValue)
+                }
+            }
+        }
+        return matrix
+    }
+
+    fun with(matrix: CrafterMatrix<Type>): CrafterMatrix<Type> {
+        return with(matrix.getFullData())
+    }
+
+    fun setFullData(data: MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>>) {
+        this.data = data
+    }
+
+    fun getFullData(): MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>> {
+        return data
+    }
+
+    override operator fun equals(other: Any?) : Boolean {
+        if (other !is CrafterMatrix<*>) return false
+        return getFullData() == other.getFullData()
+    }
+
+    override fun hashCode(): Int {
+        return data.hashCode()
     }
 
 }
