@@ -43,7 +43,7 @@ publishing {
     repositories {
         maven {
             name = "StckOverflwRepository"
-            url = uri("https://maven.stckoverflw.net/private")
+            url = uri("https://maven.stckoverflw.net/releases")
             credentials(PasswordCredentials::class.java)
         }
     }
