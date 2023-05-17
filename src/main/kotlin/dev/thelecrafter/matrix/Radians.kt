@@ -1,9 +1,9 @@
 package dev.thelecrafter.matrix
 
-public class Radians(public val value: Double) {
+public data class Radians(public val value: Double) {
 
     public companion object {
-        public fun fromDegree(degree: Double): Radians {
+        public fun ofDegree(degree: Double): Radians {
             return Radians(degree * Math.PI / 180)
         }
     }
@@ -11,5 +11,14 @@ public class Radians(public val value: Double) {
     public fun toDegree(): Double {
         return value * 180 / Math.PI
     }
+
+    /**
+     * Returns the radians as a factor of pi.
+     * Example: Radians(3.14) ≈ 1 * Math.PI
+     */
+    public val piFactor: Double
+        get() {
+            return value / Math.PI
+        }
 
 }
