@@ -1,21 +1,25 @@
 package dev.thelecrafter.matrix
 
+import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval
+
 /**
- * 3d Matrix
+ * 3d Double Matrix
  */
-public class CrafterMatrix<Type> {
+@Deprecated("Will be replaced in the future")
+@ScheduledForRemoval
+public class CrafterMatrix<V> {
 
     public companion object {
-        public fun <Type> of(data: MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>>) : CrafterMatrix<Type> {
-            val matrix = CrafterMatrix<Type>()
+        public fun <V> of(data: MutableMap<Double, MutableMap<Double, MutableMap<Double, V>>>) : CrafterMatrix<V> {
+            val matrix = CrafterMatrix<V>()
             matrix.setFullData(data)
             return matrix
         }
     }
 
-    private var data: MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>> = mutableMapOf()
+    private var data: MutableMap<Double, MutableMap<Double, MutableMap<Double, V>>> = mutableMapOf()
 
-    public fun set(location: CrafterVector, data: Type) {
+    public fun set(location: CrafterVector, data: V) {
         val yMap = this.data[location.x] ?: mutableMapOf()
         val zMap = yMap[location.y] ?: mutableMapOf()
         zMap[location.z] = data
@@ -23,7 +27,7 @@ public class CrafterMatrix<Type> {
         this.data[location.x] = yMap
     }
 
-    public fun get(location: CrafterVector): Type? {
+    public fun get(location: CrafterVector): V? {
         return data[location.x]?.get(location.y)?.get(location.z)
     }
 
@@ -39,14 +43,14 @@ public class CrafterMatrix<Type> {
         return get(location) != null
     }
 
-    public fun clone(): CrafterMatrix<Type> {
+    public fun clone(): CrafterMatrix<V> {
         return of(data)
     }
 
     /**
      * Merges cloned data with given one (overwriting cloned data if needed)
      */
-    public fun with(data: MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>>): CrafterMatrix<Type> {
+    public fun with(data: MutableMap<Double, MutableMap<Double, MutableMap<Double, V>>>): CrafterMatrix<V> {
         val matrix = clone()
         data.forEach { (xKey, xValue) ->
             xValue.forEach { (yKey, yValue) ->
@@ -58,15 +62,15 @@ public class CrafterMatrix<Type> {
         return matrix
     }
 
-    public fun with(matrix: CrafterMatrix<Type>): CrafterMatrix<Type> {
+    public fun with(matrix: CrafterMatrix<V>): CrafterMatrix<V> {
         return with(matrix.getFullData())
     }
 
-    public fun setFullData(data: MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>>) {
+    public fun setFullData(data: MutableMap<Double, MutableMap<Double, MutableMap<Double, V>>>) {
         this.data = data
     }
 
-    public fun getFullData(): MutableMap<Double, MutableMap<Double, MutableMap<Double, Type>>> {
+    public fun getFullData(): MutableMap<Double, MutableMap<Double, MutableMap<Double, V>>> {
         return data
     }
 

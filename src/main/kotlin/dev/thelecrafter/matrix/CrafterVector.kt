@@ -1,9 +1,12 @@
 package dev.thelecrafter.matrix
 
+import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval
 import kotlin.math.abs
 import kotlin.math.acos
 import kotlin.math.sqrt
 
+@Deprecated("Deprecated", replaceWith = ReplaceWith("Vector"))
+@ScheduledForRemoval
 public data class CrafterVector(val x: Double, val y: Double, val z: Double) {
 
     public companion object {

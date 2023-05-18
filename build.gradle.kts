@@ -1,16 +1,18 @@
 plugins {
     kotlin("jvm") version "1.8.20"
+    id("org.jetbrains.dokka") version "1.8.10"
     id("maven-publish")
 }
 
 group = "dev.thelecrafter"
-version = "1.0.1"
+version = "2.0.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    api("org.jetbrains:annotations:24.0.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
