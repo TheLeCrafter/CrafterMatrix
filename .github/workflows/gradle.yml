@@ -32,6 +32,11 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build dokkaHtml
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: github-pages
+        path: build/dokka/html/*
   deploy:
     needs: build
     permissions:
@@ -47,5 +52,4 @@ jobs:
       uses: actions/deploy-pages@v2.0.1
       with:
         token: ${{ github.token }}
-        artifact_name: "build/dokka/html"
         
